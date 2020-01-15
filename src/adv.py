@@ -5,7 +5,7 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -25,14 +25,14 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+# room['outside'].n_to = room['foyer']
+# room['foyer'].s_to = room['outside']
+# room['foyer'].n_to = room['overlook']
+# room['foyer'].e_to = room['narrow']
+# room['overlook'].s_to = room['foyer']
+# room['narrow'].w_to = room['foyer']
+# room['narrow'].n_to = room['treasure']
+# room['treasure'].s_to = room['narrow']
 
 #
 # Main
@@ -48,29 +48,52 @@ room['treasure'].s_to = room['narrow']
 
 choices = ["q", "n", "e", "w", "s"]
 
-player = Player("outside", ["Sword", "Amulet"], 40)
+player = Player('outside', ["Sword", "Amulet"], 40)
 
 while True:
+    print("\n")
     print(player)
+    print(room[player.room].desc)
+
     cmd = input("===> ")
 
     if cmd == "q":
-        print("Thank you for playing!")
+        print("Thank you for playing!\n")
         break
     elif cmd == "n":
-        print("Going north")
-        print(player)
+        print("\nGoing north...")
+        if player.room == 'outside':
+            player.room = 'foyer'
+        elif player.room == 'foyer':
+            player.room = 'overlook'
+        elif player.room == 'narrow':
+            player.room = 'treasure'
+        else:
+            print("You can't go that way.")
     elif cmd == "e":
-        print("Going east")
-        print(player)
+        print("\nGoing east...")
+        if player.room == 'foyer':
+            player.room = 'narrow'
+        else:
+            print("You can't go that way.")
     elif cmd == "w":
-        print("Going west")
-        print(player)
+        print("\nGoing west...")
+        if player.room == 'narrow':
+            player.room = 'foyer'
+        else:
+            print("You can't go that way.")
     elif cmd == "s":
-        print("Going south")
-        print(player)
+        print("\nGoing south...")
+        if player.room == 'foyer':
+            player.room = 'outside'
+        elif player.room == 'overlook':
+            player.room = 'foyer'
+        elif player.room == 'treasure':
+            player.room = 'narrow'
+        else:
+            print("You can't go that way.")
     else:
-        print("That is not a valid input.")
+        print("That is not a valid input.\n")
 
 
 # If the user enters a cardinal direction, attempt to move to the room there.
