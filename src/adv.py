@@ -107,9 +107,17 @@ while True:
         new_stuff = input_query.intersection(room[player.room].items)
         for x in new_stuff:
             room[player.room].items.remove(x)
-        player.inv.append(new_stuff)
-        print(player.inv)
-        print(room[player.room].items)
+            player.inv.append(x)
+            print("You have taken the", x)
+        print("Items in room: ", room[player.room].items)
+    elif "drop" in cmd:
+        input_query = set(cmd.split())
+        new_stuff = input_query.intersection(player.inv)
+        for x in new_stuff:
+            player.inv.remove(x)
+            room[player.room].items.append(x)
+            print("You have dropped the", x)
+        print("Items in room: ", room[player.room].items)
     else:
         print("That is not a valid input.\n")
 
