@@ -5,21 +5,21 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons."),
+                     "North of you, the cave mount beckons.", ["lamp"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", []),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", []),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", []),
 }
 
 
@@ -46,13 +46,19 @@ earlier adventurers. The only exit is to the south."""),
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 
-choices = ["q", "n", "e", "w", "s"]
+choices = ["q", "i", "n", "e", "w", "s"]
 
 player = Player('outside', ["Sword", "Amulet"], 40)
 
+print()
+print()
+print("Welcome to Your Python Object-Oriented Adventure!")
+print()
+print("Type 'n' for North, 'w' for West, 's' for South, 'e' for East, 'i' for Inventory, or 'q' to Quit.")
+
 while True:
-    print("\n")
-    print(player)
+    print()
+    # print(player)
     print(room[player.room].desc)
 
     cmd = input("===> ")
@@ -60,6 +66,8 @@ while True:
     if cmd == "q":
         print("Thank you for playing!\n")
         break
+    elif cmd == "i":
+        print(player.inv)
     elif cmd == "n":
         print("\nGoing north...")
         if player.room == 'outside':
@@ -92,6 +100,16 @@ while True:
             player.room = 'narrow'
         else:
             print("You can't go that way.")
+    elif "look" in cmd:
+        print("Items in room: ", room[player.room].items)
+    elif "take" in cmd:
+        input_query = set(cmd.split())
+        new_stuff = input_query.intersection(room[player.room].items)
+        for x in new_stuff:
+            room[player.room].items.remove(x)
+        player.inv.append(new_stuff)
+        print(player.inv)
+        print(room[player.room].items)
     else:
         print("That is not a valid input.\n")
 
