@@ -8,7 +8,9 @@ room = {
                      "North of you, the cave mount beckons.", ["lamp"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", ["coin"]),
+passages run north, west, and east.""", ["coin"]),
+
+    'ballroom': Room("Ballroom", """A grand hall where many formal events used to take place. The way you came in seems to be the only entrance or exit. There is a small gem on the ground.""", ["gem"]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -82,12 +84,16 @@ while True:
         print("\nGoing east...")
         if player.room == 'foyer':
             player.room = 'narrow'
+        elif player.room == 'ballroom':
+            player.room = 'foyer'
         else:
             print("You can't go that way.")
     elif cmd == "w":
         print("\nGoing west...")
         if player.room == 'narrow':
             player.room = 'foyer'
+        elif player.room == 'foyer':
+            player.room = 'ballroom'
         else:
             print("You can't go that way.")
     elif cmd == "s":
