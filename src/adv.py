@@ -72,7 +72,7 @@ print()
 print()
 print("Welcome to Your Python Object-Oriented Adventure!")
 print()
-print("Type 'n' for North, 'w' for West, 's' for South, 'e' for East, 'i' for Inventory, or 'q' to Quit.")
+print("You may input: \n'n' for North, \n'e' for East, \n'w' for West, \n's' for South, \n'i' for Inventory, \n'look' to search for items, \n'examine' to look at items you have, \n'shake' to shake them, \n\tor 'q' to Quit.")
 
 while True:
     print()
@@ -139,6 +139,11 @@ while True:
         new_stuff = input_query.intersection(player.inv)
         for x in new_stuff:
             print(item[x].desc)
+    elif "shake" in cmd:
+        input_query = set(cmd.split())
+        new_stuff = input_query.intersection(player.inv)
+        for x in new_stuff:
+            print(item[x].noise)
     elif "drop" in cmd:
         input_query = set(cmd.split())
         new_stuff = input_query.intersection(player.inv)
