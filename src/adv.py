@@ -1,7 +1,22 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
+
+item = {
+    'lamp': Item("Lamp", """An old-fashioned oil lamp.""", "It sloshes around a little, there is some oil left!"),
+
+    'coin': Item("Coin", """A friction-faded piece of currency bearing the image of a long forgotten statesman.""", "It doesn't have anything to clink against, and is silent"),
+
+    'gem': Item("Gem", """A stone of deep violet hue.""", "Silence."),
+
+    'dagger': Item("Dagger", """A rusted blade that could use a bit of upkeep.""", "Careful! You might hurt yourself.."),
+
+    'flask': Item("Flask", """A slim container that looks like it'll hold a fair amount of liquid.""", "Just some sediment inside, you could stand to clean this out."),
+
+    'dust': Item("Dust", """Evidence of time passing, general decay, and stagnance.""", "You have dropped the dust.")
+}
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -23,6 +38,7 @@ to north. The smell of gold permeates the air.""", ["flask"]),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south.""", ["dust"]),
 }
+
 
 
 # Link rooms together
@@ -107,7 +123,9 @@ while True:
         else:
             print("You can't go that way.")
     elif "look" in cmd:
-        print("Items in room: ", room[player.room].items)
+        print("Items in room: ")
+        for x in room[player.room].items:
+            print(x)
     elif "take" in cmd:
         input_query = set(cmd.split())
         new_stuff = input_query.intersection(room[player.room].items)
@@ -116,6 +134,11 @@ while True:
             player.inv.append(x)
             print("You have taken the", x)
         print("Items in room: ", room[player.room].items)
+    elif "examine" in cmd:
+        input_query = set(cmd.split())
+        new_stuff = input_query.intersection(player.inv)
+        for x in new_stuff:
+            print(item[x].desc)
     elif "drop" in cmd:
         input_query = set(cmd.split())
         new_stuff = input_query.intersection(player.inv)
